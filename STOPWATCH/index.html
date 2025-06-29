@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Stopwatch</title>
+  <style>
+  
+      body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #000; /* black background */
+      color: #f1f1f1;      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background:#111;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #display {
+      font-size: 48px;
+      margin: 20px 0;
+      color:#00ffcc;
+    }
+
+    .buttons button {
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: white;
+}
+
+.buttons button:nth-child(1) {
+  background: #28a745;
+}
+.buttons button:nth-child(1):hover {
+  background: #218838;
+}
+
+.buttons button:nth-child(2) {
+  background: #dc3545;
+}
+.buttons button:nth-child(2):hover {
+  background: #c82333;
+}
+
+.buttons button:nth-child(3) {
+  background: #ffc107;
+  color: #000;
+}
+.buttons button:nth-child(3):hover {
+  background: #e0a800;
+}
+
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Stopwatch</h1>
+    <div id="display">00:00:00</div>
+    <div class="buttons">
+      <button onclick="start()">Start</button>
+      <button onclick="stop()">Stop</button>
+      <button onclick="reset()">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    let [hours, minutes, seconds] = [0, 0, 0];
+    let timer = null;
+
+    function updateDisplay() {
+      const h = String(hours).padStart(2, '0');
+      const m = String(minutes).padStart(2, '0');
+      const s = String(seconds).padStart(2, '0');
+      document.getElementById("display").innerText = `${h}:${m}:${s}`;
+    }
+
+    function stopwatch() {
+      seconds++;
+      if (seconds === 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes === 60) {
+          minutes = 0;
+          hours++;
+        }
+      }
+      updateDisplay();
+    }
+
+    function start() {
+      if (timer !== null) return;
+      timer = setInterval(stopwatch, 1000);
+    }
+
+    function stop() {
+      clearInterval(timer);
+      timer = null;
+    }
+
+    function reset() {
+      stop();
+      [hours, minutes, seconds] = [0, 0, 0];
+      updateDisplay();
+    }
+  </script>
+</body>
+</html>
